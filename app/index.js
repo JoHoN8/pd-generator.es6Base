@@ -23,8 +23,7 @@ module.exports = generator.extend({
     prompting: function(){
         var self = this;
 
-        this.log(yosay('Welcome to ' + 
-            chalk.yellow('YANG (Yet Another Angular)') + ' generator!'));
+        this.log(yosay(chalk.yellow('Create an ES6 project')));
             
         //var done = this.async();
         return this.prompt([{
@@ -52,11 +51,6 @@ module.exports = generator.extend({
                     name: 'Moment.js',
                     value: 'momentjs',
                     checked: false
-                },
-                {
-                    name: 'jQuery',
-                    value: 'jquery',
-                    checked: true
                 }
             ]
         }]).then(function(answers){
@@ -124,10 +118,6 @@ module.exports = generator.extend({
         },
         appStaticFiles: function(){
             // this.copy('_favicon.ico', 'src/favicon.ico');
-            this.fs.copy(
-                this.templatePath('doea/*.js'),
-                this.destinationPath('src/js/doeaLibs')
-            );
             this.fs.copy(
                 this.templatePath('styles/*.css'),
                 this.destinationPath('src/styles')

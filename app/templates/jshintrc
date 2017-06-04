@@ -5,5 +5,6 @@
   "strict": "implied",
   "forin": true,
   "curly": true,
-  "predef": ["jQuery", "SP", "moment", "console", "document", "doeaSPlib"]
+  "esversion":6,
+  "predef": ["jQuery", "SP", "moment", "console", "document"]
 }
