@@ -8,8 +8,7 @@ var gulp = require('gulp'),
     gulp.task('pack', function() {
         return gulp.src('src/**/*.js')
             .pipe(webpackStream(webpackConfig, webpack))
-            .pipe(gulp.dest('dist'))
-            .pipe(notify({ message: 'Scripts task complete' }));
+            .pipe(gulp.dest('dist'));
     });
 
 

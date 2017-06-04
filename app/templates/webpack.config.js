@@ -1,5 +1,8 @@
 const path = require('path');
 module.exports = {
+    output: {
+        filename: 'app.js'
+    },
     module:{
         rules:[
             {  
@@ -13,9 +16,6 @@ module.exports = {
                 }
             }
         ]
-    },
-    output: {
-        filename: 'main.js'
     }
 };
 
