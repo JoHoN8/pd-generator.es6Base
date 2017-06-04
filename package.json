@@ -1,0 +1,16 @@
+{
+  "name": "generator-es6Base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ted",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "latest",
+    "yeoman-generator": "latest",
+    "yosay": "latest"
+  }
+}

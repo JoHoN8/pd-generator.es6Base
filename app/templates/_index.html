@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="<%= ngapp %>">
+
+<head>
+    <meta charset="utf-8">
+    <title><%= appname %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--bower:css-->
+    <!--endbower-->
+    <!-- inject:css -->
+    <!-- endinject -->
+</head>
+<body>
+    <div id="applicationHost" class="container body-content admin-appHost">
+        <div data-ng-include="'/app/layout/shell.html'"></div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <span class="pull-right text-info credit">Base App</span>
+        </div>
+    </div>
+
+     <!--bower:js-->
+     <!--endbower-->
+
+    <!-- inject:js -->
+    <!-- endinject -->
+</body>
+
+</html>

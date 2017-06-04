@@ -1,0 +1,9 @@
+{
+  "eqeqeq": true,
+  "undef": true,
+  "unused": true,
+  "strict": "implied",
+  "forin": true,
+  "curly": true,
+  "predef": ["jQuery", "SP", "moment", "console", "document", "doeaSPlib"]
+}
