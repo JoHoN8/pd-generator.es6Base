@@ -1,13 +1,21 @@
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
+    gulpUtil = require('gulp-util'),
     del = require('del'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
-    webpackConfig = require('./webpack.config.js');
+    webpackConfigDev = require('./webpack.config.dev.js'),
+    webpackConfigProd = require('./webpack.config.prod.js');
 
-    gulp.task('pack', function() {
+    gulp.task('devPack', function() {
         return gulp.src('src/**/*.js')
-            .pipe(webpackStream(webpackConfig, webpack))
+            .pipe(webpackStream(webpackConfigDev, webpack))
+            .pipe(gulp.dest('dist'));
+    });
+
+    gulp.task('prodPack', function() {
+        return gulp.src('src/**/*.js')
+            .pipe(webpackStream(webpackConfigProd, webpack))
             .pipe(gulp.dest('dist'));
     });
 

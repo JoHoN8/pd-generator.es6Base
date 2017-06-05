@@ -99,7 +99,6 @@ module.exports = generator.extend({
             packageFile.devDependencies["gulp-util"] = "latest";
             packageFile.devDependencies["webpack"] = "latest";
             packageFile.devDependencies["webpack-stream"] = "latest";
-            //this.copy('_package.json', 'package.json');
 
             this.fs.writeJSON(
                 this.destinationPath('package.json'),
@@ -127,8 +126,12 @@ module.exports = generator.extend({
                 this.destinationPath('.jshintrc')
             );
             this.fs.copy(
-                this.templatePath('webpack.config.js'),
-                this.destinationPath('webpack.config.js')
+                this.templatePath('_webpack.config.dev.js'),
+                this.destinationPath('webpack.config.dev.js')
+            );
+            this.fs.copy(
+                this.templatePath('_webpack.config.prod.js'),
+                this.destinationPath('webpack.config.prod.js')
             );
         },
         scripts: function(){
@@ -137,11 +140,11 @@ module.exports = generator.extend({
                 this.destinationPath('src/js/app.js'),
                 {
                     projectName: this.projectName
-                    //app: this.config.get('ngappname')
                 }
             );
         },
         html: function(){
+            // example
             // this.fs.copyTpl(
             //     this.templatePath('_index.html'),
             //     this.destinationPath('src/index.html'),
