@@ -29,7 +29,7 @@ module.exports = generator.extend({
         return this.prompt([{
             type: 'input',
             name: 'projectName',
-            message: 'Provide project name (siteApp)',
+            message: 'Provide project name',
             default: 'siteApp'
         },
         {

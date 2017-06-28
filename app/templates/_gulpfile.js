@@ -6,13 +6,16 @@ var gulp = require('gulp'),
     packageData = require("./package.json");
 
 
+/************common webpack configs************/
+
 /**********add external libraries here*********/
 //example - webpackConfig.externals.jquery = 'jquery';
  
+
+/*********webpack stuff*************************/
 gulp.task('dev', ['webpack:dev', 'copyCSS']);
 gulp.task('prod', ['webpack:prod', 'copyCSS']);
 
-/*********webpack stuff*************************/
 gulp.task('webpack:prod', function (callback) {
     //custom production config
     let UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
@@ -53,7 +56,7 @@ gulp.task('spSave', function () {
 /*************copy files stuff********************************/
 gulp.task('copyCSS', function () {
     gulp.src('./src/styleSheets/*')
-        .pipe(gulp.dest('./dist/styles'));
+        .pipe(gulp.dest('./dist/styleSheets'));
 });
 
     /*
