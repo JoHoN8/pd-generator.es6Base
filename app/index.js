@@ -40,7 +40,7 @@ module.exports = generator.extend({
                 {
                     name: 'jQuery',
                     value: 'jquery',
-                    checked: true
+                    checked: false
                 },
                 {
                     name: 'lodash',
@@ -50,6 +50,26 @@ module.exports = generator.extend({
                 {
                     name: 'Moment.js',
                     value: 'momentjs',
+                    checked: false
+                },
+                {
+                    name: 'pd-spUtil.js',
+                    value: 'pdsputil',
+                    checked: false
+                },
+                {
+                    name: 'pd-spServerAjax.js',
+                    value: 'pdspserverajax',
+                    checked: false
+                },
+                {
+                    name: 'pd-spServerJsom.js',
+                    value: 'spserverjsom',
+                    checked: false
+                },
+                {
+                    name: 'pd-appUtil.js',
+                    value: 'pdapputil',
                     checked: false
                 }
             ]
@@ -62,6 +82,10 @@ module.exports = generator.extend({
             self.includeJquery = self.includes(answers.jslibs, 'jquery');
             self.includeLodash = self.includes(answers.jslibs, 'lodash');
             self.includeMoment = self.includes(answers.jslibs, 'momentjs');             
+            self.includesputil = self.includes(answers.jslibs, 'pdsputil');             
+            self.includespserverajax = self.includes(answers.jslibs, 'pdspserverajax');             
+            self.includespserverjsom = self.includes(answers.jslibs, 'pdspserverjson');             
+            self.includeapputil = self.includes(answers.jslibs, 'pdapputil');             
             //done(); 
         });
             
@@ -88,17 +112,19 @@ module.exports = generator.extend({
             if(this.includeJquery) {packageFile.dependencies["jquery"] = "latest";}
             if(this.includeLodash) {packageFile.dependencies["lodash"] = "latest";}
             if(this.includeMoment) {packageFile.dependencies["moment"] = "latest";}
+            if(this.includesputil) {packageFile.dependencies["pd-sputil"] = "latest";}
+            if(this.includespserverajax) {packageFile.dependencies["pd-spserverajax"] = "latest";}
+            if(this.includespserverjsom) {packageFile.dependencies["pd-spserverjsom"] = "latest";}
+            if(this.includeapputil) {packageFile.dependencies["pd-apputil"] = "latest";}
             
             //devDependencies
             packageFile.devDependencies["babel-core"] = "latest";
             packageFile.devDependencies["babel-loader"] = "latest";
             packageFile.devDependencies["babel-preset-es2015"] = "latest";
-            packageFile.devDependencies["del"] = "latest";
             packageFile.devDependencies["gulp"] = "latest";
-            packageFile.devDependencies["gulp-concat"] = "latest";
             packageFile.devDependencies["gulp-util"] = "latest";
             packageFile.devDependencies["webpack"] = "latest";
-            packageFile.devDependencies["webpack-stream"] = "latest";
+            packageFile.devDependencies["gulp-spsave"] = "latest";
 
             this.fs.writeJSON(
                 this.destinationPath('package.json'),
@@ -119,25 +145,21 @@ module.exports = generator.extend({
             // this.copy('_favicon.ico', 'src/favicon.ico');
             this.fs.copy(
                 this.templatePath('styles/*.css'),
-                this.destinationPath('src/styles')
+                this.destinationPath('src/styleSheets')
             );
             this.fs.copy(
                 this.templatePath('jshintrc'),
                 this.destinationPath('.jshintrc')
             );
             this.fs.copy(
-                this.templatePath('_webpack.config.dev.js'),
-                this.destinationPath('webpack.config.dev.js')
-            );
-            this.fs.copy(
-                this.templatePath('_webpack.config.prod.js'),
-                this.destinationPath('webpack.config.prod.js')
+                this.templatePath('_webpack.config.js'),
+                this.destinationPath('webpack.config.js')
             );
         },
         scripts: function(){
             this.fs.copyTpl(
                 this.templatePath('app/_app.js'),
-                this.destinationPath('src/js/app.js'),
+                this.destinationPath('src/scripts/app.js'),
                 {
                     projectName: this.projectName
                 }
