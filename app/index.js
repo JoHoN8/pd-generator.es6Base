@@ -163,6 +163,10 @@ module.exports = generator.extend({
                 this.templatePath('_webpack.config.js'),
                 this.destinationPath('webpack.config.js')
             );
+            this.fs.copy(
+                this.templatePath('_gitignore'),
+                this.destinationPath('.gitignore')
+            );
         },
         scripts: function(){
             this.fs.copyTpl(
