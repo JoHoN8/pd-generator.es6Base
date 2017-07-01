@@ -121,6 +121,7 @@ module.exports = generator.extend({
             packageFile.devDependencies["babel-core"] = "latest";
             packageFile.devDependencies["babel-loader"] = "latest";
             packageFile.devDependencies["babel-preset-es2015"] = "latest";
+            packageFile.devDependencies["babel-preset-stage-0"] = "latest";
             packageFile.devDependencies["gulp"] = "latest";
             packageFile.devDependencies["gulp-util"] = "latest";
             packageFile.devDependencies["webpack"] = "latest";
