@@ -145,6 +145,10 @@ module.exports = generator.extend({
         appStaticFiles: function(){
             // this.copy('_favicon.ico', 'src/favicon.ico');
             this.fs.copy(
+                this.templatePath('gitignore'),
+                this.destinationPath('.gitignore')
+            );
+            this.fs.copy(
                 this.templatePath('styles/*.css'),
                 this.destinationPath('src/styleSheets')
             );
