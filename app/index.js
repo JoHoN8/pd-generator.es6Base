@@ -155,8 +155,8 @@ module.exports = generator.extend({
                 this.destinationPath('src/styleSheets')
             );
             this.fs.copy(
-                this.templatePath('jshintrc'),
-                this.destinationPath('.jshintrc')
+                this.templatePath('.eslintrc.json'),
+                this.destinationPath('.eslintrc.json')
             );
             this.fs.copy(
                 this.templatePath('_webpack.config.js'),
