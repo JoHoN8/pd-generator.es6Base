@@ -34,9 +34,7 @@
         },
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": [],
     "rules": {
         "indent": [
             "error",
