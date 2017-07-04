@@ -128,6 +128,8 @@ module.exports = generator.extend({
             packageFile.devDependencies["gulp"] = "latest";
             packageFile.devDependencies["gulp-spsave"] = "latest";
             packageFile.devDependencies["gulp-util"] = "latest";
+            packageFile.devDependencies["eslint"] = "latest";
+            packageFile.devDependencies["eslint-plugin-react"] = "latest";
 
             this.fs.writeJSON(
                 this.destinationPath('package.json'),
