@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
-    creds = require(), //path to credintial file
+    //creds = require(), //path to credintial file
+    spsave = require('gulp-spsave'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
     packageData = require("./package.json");
@@ -15,6 +16,7 @@ var gulp = require('gulp'),
 /*********webpack stuff*************************/
 gulp.task('dev', ['webpack:dev', 'copyCSS']);
 gulp.task('prod', ['webpack:prod', 'copyCSS']);
+gulp.task('saveAll', ['saveScripts', 'saveStyles', 'savePages']);
 
 gulp.task('webpack:prod', function (callback) {
     //custom production config
@@ -45,11 +47,30 @@ gulp.task('webpack:dev', function (callback) {
 });
 
 /***************sp save stuff***************************/
-gulp.task('spSave', function () {
-    return gulp.src("./dist")
+gulp.task('saveScripts', function () {
+    return gulp.src("./dist/**/*.js")
         .pipe(spsave({
             siteUrl: '', //absolute path to site
-            folder: "YourAppAssets/js" //library/folder
+            folder: '', //library/folder
+            flatten: false
+        }, creds));
+});
+
+gulp.task('saveStyles', function () {
+    return gulp.src("./dist/**/*.css")
+        .pipe(spsave({
+            siteUrl: '', //absolute path to site
+            folder: '', //library/folder
+            flatten: false
+        }, creds));
+});
+
+gulp.task('savePages', function () {
+    return gulp.src("./dist/**/*.aspx")
+        .pipe(spsave({
+            siteUrl: '', //absolute path to site
+            folder: '', //library/folder
+            flatten: false
         }, creds));
 });
 

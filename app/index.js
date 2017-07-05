@@ -128,6 +128,7 @@ module.exports = generator.extend({
             packageFile.devDependencies["gulp"] = "latest";
             packageFile.devDependencies["gulp-spsave"] = "latest";
             packageFile.devDependencies["gulp-util"] = "latest";
+            packageFile.devDependencies["gulp-spsave"] = "latest";
             packageFile.devDependencies["eslint"] = "latest";
 
             this.fs.writeJSON(
@@ -193,7 +194,7 @@ module.exports = generator.extend({
     },
     install: function(){
         //this.bowerInstall();
-        this.yarnInstall();
+        this.npmInstall();
     },
     end: function(){
         this.log(chalk.yellow.bold('Installation successful!'));
