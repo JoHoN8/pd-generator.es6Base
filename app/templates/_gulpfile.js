@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     spsave = require('gulp-spsave'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
-    packageData = require("./package.json");
+    packageData = require("./package.json"),
+    connect = require('gulp-connect');;
 
 
 /************common webpack configs************/
@@ -20,9 +21,12 @@ gulp.task('saveAll', ['saveScripts', 'saveStyles', 'savePages']);
 
 gulp.task('webpack:prod', function (callback) {
     //custom production config
-    let UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+    let UglifyJsPlugin = new webpack.optimize.UglifyJsPlugin();
+    let prodTrigger = new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    });
     webpackConfig.output.filename = 'app.min.js';
-    webpackConfig.plugins.push(new UglifyJsPlugin({ minimize: true }));
+    webpackConfig.plugins.push(prodTrigger, UglifyJsPlugin);
     
     webpack(webpackConfig, function (err, stats) {
         if (err) {
@@ -80,20 +84,13 @@ gulp.task('copyCSS', function () {
         .pipe(gulp.dest('./dist/styleSheets'));
 });
 
-    /*
-    to min
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-
-    Sass compile (gulp-ruby-sass)
-    Autoprefixer (gulp-autoprefixer)
-    Minify CSS (gulp-cssnano)
-    JSHint (gulp-jshint)
-    Concatenation (gulp-concat)
-    Uglify (gulp-uglify)
-    Compress images (gulp-imagemin)
-    LiveReload (gulp-livereload)
-    Caching of images so only changed images are compressed (gulp-cache)
-    Notify of changes (gulp-notify)
-    Clean files for a clean build (del)
-    */
+/****************server stuff****************************/
+gulp.task('startServer', function () {
+    connect.server({
+        root: './dist',
+        livereload: true
+    });
+});
+gulp.task('stopServer', function () {
+    connect.serverClose();
+});
