@@ -4,8 +4,7 @@ var gulp = require('gulp'),
     spsave = require('gulp-spsave'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
-    packageData = require("./package.json"),
-    connect = require('gulp-connect');;
+    packageData = require("./package.json");
 
 
 /************common webpack configs************/
@@ -22,11 +21,11 @@ gulp.task('saveAll', ['saveScripts', 'saveStyles', 'savePages']);
 gulp.task('webpack:prod', function (callback) {
     //custom production config
     let UglifyJsPlugin = new webpack.optimize.UglifyJsPlugin();
-    let prodTrigger = new webpack.DefinePlugin({
+    let envTrigger = new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     });
     webpackConfig.output.filename = 'app.min.js';
-    webpackConfig.plugins.push(prodTrigger, UglifyJsPlugin);
+    webpackConfig.plugins.push(envTrigger, UglifyJsPlugin);
     
     webpack(webpackConfig, function (err, stats) {
         if (err) {
@@ -41,6 +40,11 @@ gulp.task('webpack:dev', function (callback) {
     //custom dev config
     webpackConfig.output.filename = 'app.js';
 
+    let envTrigger = new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('developer')
+    });
+
+    webpackConfig.plugins.push(envTrigger);
     webpack(webpackConfig, function (err, stats) {
         if (err) {
             throw new gutil.PluginError('webpack:build', err);
@@ -82,15 +86,4 @@ gulp.task('savePages', function () {
 gulp.task('copyCSS', function () {
     gulp.src('./src/styleSheets/*')
         .pipe(gulp.dest('./dist/styleSheets'));
-});
-
-/****************server stuff****************************/
-gulp.task('startServer', function () {
-    connect.server({
-        root: './dist',
-        livereload: true
-    });
-});
-gulp.task('stopServer', function () {
-    connect.serverClose();
 });
