@@ -100,7 +100,7 @@ module.exports = generator.extend({
                 description: this.desc,
                 main: "app.js",
                 scripts: {
-                    test: "echo \"Error: no test specified\" && exit 1"
+                    "devServer": "webpack-dev-server --config ./webpackConfigs/webpack.server.config.js"
                 },
                 author: this.author,
                 license: "ISC",
@@ -119,8 +119,10 @@ module.exports = generator.extend({
             
             //devDependencies
             packageFile.devDependencies["webpack"] = "latest";
+            packageFile.devDependencies["webpack-dev-server"] = "latest";
             packageFile.devDependencies["css-loader"] = "latest";
             packageFile.devDependencies["style-loader"] = "latest";
+            packageFile.devDependencies["file-loader"] = "latest";
             packageFile.devDependencies["babel-core"] = "latest";
             packageFile.devDependencies["babel-loader"] = "latest";
             packageFile.devDependencies["babel-preset-es2015"] = "latest";
@@ -152,16 +154,16 @@ module.exports = generator.extend({
                 this.destinationPath('.gitignore')
             );
             this.fs.copy(
-                this.templatePath('styles/*.css'),
-                this.destinationPath('src/styleSheets')
+                this.templatePath('app/_main.css'),
+                this.destinationPath('src/styleSheets/main.css')
             );
             this.fs.copy(
                 this.templatePath('.eslintrc.json'),
                 this.destinationPath('.eslintrc.json')
             );
             this.fs.copy(
-                this.templatePath('_webpack.config.js'),
-                this.destinationPath('webpack.config.js')
+                this.templatePath('webpackConfigs/*'),
+                this.destinationPath('webpackConfigs/')
             );
             this.fs.copy(
                 this.templatePath('_gitignore'),
