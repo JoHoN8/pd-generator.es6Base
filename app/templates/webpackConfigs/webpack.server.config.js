@@ -1,14 +1,20 @@
 const   path = require('path'),
-        webpack = require('webpack');
+        webpack = require('webpack'),
+        HtmlWebpackPlugin = require('html-webpack-plugin'),
+        htmlConfig = {
+            template: "./src/index.html",
+            filename: "index.html",
+            inject: "body"
+        };
 
 
 module.exports = {
     //context: path.resolve(__dirname, "app"),
     entry: './src/scripts/app.js',
     output: {
-        path: path.resolve(__dirname, "./dist/scripts"),
-        filename: 'app.js',
-        publicPath: '/scripts/app'
+        path: path.resolve(__dirname, "./dist"),
+        filename: './scripts/app.js',
+        publicPath: '/'
     },
     module:{
         rules:[
@@ -25,7 +31,6 @@ module.exports = {
                     options: {
                         "presets": [
                             ["es2015", {"modules": false}],
-                            "react",
                             "stage-0"
                         ],
                         plugins: []
@@ -42,7 +47,8 @@ module.exports = {
         extensions: [".js", ".jsx", ".css"]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin(htmlConfig)
     ],
     devServer: {
         hot: true, // Tell the dev-server we're using HMR

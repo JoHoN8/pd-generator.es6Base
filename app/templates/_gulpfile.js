@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     //creds = require(), //path to credintial file
     spsave = require('gulp-spsave'),
     webpack = require('webpack'),
-    webpackConfig = require('./webpack.config.js'),
+    webpackConfig = require('./webpackConfigs/webpack.config.js'),
     packageData = require("./package.json");
 
 
@@ -14,9 +14,9 @@ var gulp = require('gulp'),
  
 
 /*********webpack stuff*************************/
-gulp.task('dev', ['webpack:dev', 'copyCSS']);
-gulp.task('prod', ['webpack:prod', 'copyCSS']);
-gulp.task('saveAll', ['saveScripts', 'saveStyles', 'savePages']);
+gulp.task('dev', ['webpack:dev']);
+gulp.task('prod', ['webpack:prod']);
+gulp.task('saveAll', ['saveAll']);
 
 gulp.task('webpack:prod', function (callback) {
     //custom production config
@@ -73,8 +73,8 @@ gulp.task('saveStyles', function () {
         }, creds));
 });
 
-gulp.task('savePages', function () {
-    return gulp.src("./dist/**/*.aspx")
+gulp.task('saveAll', function () {
+    return gulp.src("./dist/**/*")
         .pipe(spsave({
             siteUrl: '', //absolute path to site
             folder: '', //library/folder

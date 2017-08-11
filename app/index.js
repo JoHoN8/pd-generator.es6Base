@@ -109,7 +109,7 @@ module.exports = generator.extend({
             };
 
             //dependencies
-            if(this.includeJquery) {packageFile.dependencies["jquery"] = "latest";}
+            if(this.includeJquery) {packageFile.dependencies["jquery"] = "2.2.4";}
             if(this.includeLodash) {packageFile.dependencies["lodash"] = "latest";}
             if(this.includeMoment) {packageFile.dependencies["moment"] = "latest";}
             if(this.includesputil) {packageFile.dependencies["pd-sputil"] = "latest";}
@@ -120,6 +120,7 @@ module.exports = generator.extend({
             //devDependencies
             packageFile.devDependencies["webpack"] = "latest";
             packageFile.devDependencies["webpack-dev-server"] = "latest";
+            packageFile.devDependencies["html-webpack-plugin"] = "latest";
             packageFile.devDependencies["css-loader"] = "latest";
             packageFile.devDependencies["style-loader"] = "latest";
             packageFile.devDependencies["file-loader"] = "latest";
@@ -180,15 +181,13 @@ module.exports = generator.extend({
             );
         },
         html: function(){
-            // example
-            // this.fs.copyTpl(
-            //     this.templatePath('_index.html'),
-            //     this.destinationPath('src/index.html'),
-            //     {
-            //         appname: _.startCase(this.appname),
-            //         ngapp: this.config.get('ngappname')
-            //     }
-            // );
+            this.fs.copyTpl(
+                this.templatePath('_index.html'),
+                this.destinationPath('src/index.html'),
+                {
+                    projectName: this.projectName
+                }
+            );
         }
     },
     conflicts: function(){
