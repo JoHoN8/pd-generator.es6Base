@@ -133,6 +133,7 @@ module.exports = generator.extend({
             packageFile.devDependencies["css-loader"] = "latest";
             packageFile.devDependencies["sass-loader"] = "latest";
             packageFile.devDependencies["file-loader"] = "latest";
+            packageFile.devDependencies["style-loader"] = "latest";
             packageFile.devDependencies["extract-text-webpack-plugin"] = "latest";
             packageFile.devDependencies["babel-core"] = "latest";
             packageFile.devDependencies["babel-loader"] = "latest";
