@@ -38,6 +38,11 @@ module.exports = generator.extend({
             message: 'Which JS libraries would you like to include?',
             choices: [
                 {
+                    name: 'axios',
+                    value: 'axios',
+                    checked: true
+                },
+                {
                     name: 'jQuery',
                     value: 'jquery',
                     checked: false
@@ -79,6 +84,7 @@ module.exports = generator.extend({
             //self.config.set('appname', answers.projectName);
             // self.config.save();
             
+            self.includeAxios = self.includes(answers.jslibs, 'axios');
             self.includeJquery = self.includes(answers.jslibs, 'jquery');
             self.includeLodash = self.includes(answers.jslibs, 'lodash');
             self.includeMoment = self.includes(answers.jslibs, 'momentjs');             
@@ -100,7 +106,8 @@ module.exports = generator.extend({
                 description: this.desc,
                 main: "app.js",
                 scripts: {
-                    "devServer": "webpack-dev-server --config ./webpackConfigs/webpack.server.config.js"
+                    "devBuild": "webpack --config ./webpackConfigs/webpack.config.dev.js",
+                    "prodBuild": "webpack --config ./webpackConfigs/webpack.config.prod.js"
                 },
                 author: this.author,
                 license: "ISC",
@@ -109,6 +116,7 @@ module.exports = generator.extend({
             };
 
             //dependencies
+            if(this.includeAxios) {packageFile.dependencies["axios"] = "latest";}
             if(this.includeJquery) {packageFile.dependencies["jquery"] = "2.2.4";}
             if(this.includeLodash) {packageFile.dependencies["lodash"] = "latest";}
             if(this.includeMoment) {packageFile.dependencies["moment"] = "latest";}
@@ -120,33 +128,22 @@ module.exports = generator.extend({
             
             //devDependencies
             packageFile.devDependencies["webpack"] = "latest";
-            packageFile.devDependencies["webpack-dev-server"] = "latest";
+            packageFile.devDependencies["clean-webpack-plugin"] = "latest";
             packageFile.devDependencies["html-webpack-plugin"] = "latest";
             packageFile.devDependencies["css-loader"] = "latest";
-            packageFile.devDependencies["style-loader"] = "latest";
+            packageFile.devDependencies["sass-loader"] = "latest";
             packageFile.devDependencies["file-loader"] = "latest";
+            packageFile.devDependencies["extract-text-webpack-plugin"] = "latest";
             packageFile.devDependencies["babel-core"] = "latest";
             packageFile.devDependencies["babel-loader"] = "latest";
-            packageFile.devDependencies["babel-preset-es2015"] = "latest";
+            packageFile.devDependencies["babel-preset-latest"] = "latest";
             packageFile.devDependencies["babel-preset-stage-0"] = "latest";
-            packageFile.devDependencies["gulp"] = "latest";
-            packageFile.devDependencies["gulp-spsave"] = "latest";
-            packageFile.devDependencies["gulp-util"] = "latest";
             packageFile.devDependencies["eslint"] = "latest";
+            packageFile.devDependencies["npm-run-all"] = "latest";
 
             this.fs.writeJSON(
                 this.destinationPath('package.json'),
                 packageFile
-            );
-        },
-        gulpfile: function(){
-            this.fs.copy(
-                this.templatePath('_gulpfile.js'),
-                this.destinationPath('gulpfile.js')
-            );
-            this.fs.copy(
-                this.templatePath('_gulp.config.js'),
-                this.destinationPath('gulp.config.js')
             );
         },
         appStaticFiles: function(){
@@ -156,10 +153,6 @@ module.exports = generator.extend({
                 this.destinationPath('.gitignore')
             );
             this.fs.copy(
-                this.templatePath('app/_main.css'),
-                this.destinationPath('src/styleSheets/main.css')
-            );
-            this.fs.copy(
                 this.templatePath('.eslintrc.json'),
                 this.destinationPath('.eslintrc.json')
             );
@@ -167,9 +160,11 @@ module.exports = generator.extend({
                 this.templatePath('webpackConfigs/*'),
                 this.destinationPath('webpackConfigs/')
             );
+        },
+        styleSheets: function() {
             this.fs.copy(
-                this.templatePath('_gitignore'),
-                this.destinationPath('.gitignore')
+                this.templatePath('app/_main.css'),
+                this.destinationPath('src/styleSheets/main.css')
             );
         },
         scripts: function(){
@@ -182,12 +177,9 @@ module.exports = generator.extend({
             );
         },
         html: function(){
-            this.fs.copyTpl(
+            this.fs.copy(
                 this.templatePath('_index.html'),
-                this.destinationPath('src/index.html'),
-                {
-                    projectName: this.projectName
-                }
+                this.destinationPath('src/index.html')
             );
         }
     },
