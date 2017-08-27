@@ -157,7 +157,7 @@ module.exports = generator.extend({
                 this.destinationPath('.eslintrc.json')
             );
             this.fs.copy(
-                this.templatePath('webpackConfigs/*'),
+                this.templatePath('webpackConfigs/**'),
                 this.destinationPath('webpackConfigs/')
             );
         },
