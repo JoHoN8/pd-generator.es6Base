@@ -28,7 +28,7 @@ module.exports = {
 	babelOptions: {
 		"compact": false,
 		"presets": [
-			["latest", {"modules": false}],
+			["env", {"modules": false}],
 			"stage-0"
 		],
 		plugins: []
