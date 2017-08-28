@@ -1,31 +1,95 @@
-<!--
-    <%= projectName %>
--->
-<!doctype html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title><%= projectName %></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- inject:css -->
-    <!-- endinject -->
-</head>
-<body>
-    <div id="applicationHost" class="container body-content admin-appHost">
-        <div data-ng-include="'/app/layout/shell.html'"></div>
-    </div>
-
-    <div id="footer">
-        <div class="container">
-            <span class="pull-right text-info credit">Base App</span>
-        </div>
-    </div>
-
-    <!-- inject:js -->
-    <!-- endinject -->
-</body>
-
-</html>
+<%= htmlWebpackPlugin.options.header%>
+<asp:Content ContentPlaceHolderId="PlaceHolderPageTitle" runat="server">
+	<%= htmlWebpackPlugin.options.projectName%>
+</asp:Content>
+<asp:Content ContentPlaceHolderId="PlaceHolderPageTitleInTitleArea" runat="server">
+	<%= htmlWebpackPlugin.options.projectName%>
+</asp:Content>
+<asp:Content ContentPlaceHolderId="PlaceHolderAdditionalPageHead" runat="server">
+	<meta name="GENERATOR" content="Microsoft SharePoint" />
+	<meta name="ProgId" content="SharePoint.WebPartPage.Document" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="CollaborationServer" content="SharePoint Team Web Site" />
+	<link rel="stylesheet" type="text/css" href="/Style%20Sheets/siteTopNavigation.css" />
+	<link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.css%>" />
+	<script type="text/javascript" src="/sites/EA/routing/SiteAssets/Scripts_and_StyleSheets/Libraries/jquery3.min.js"></script>
+	<script type="text/javascript" src="/sites/EA/routing/SiteAssets/Scripts_and_StyleSheets/Libraries/DOEA_library-v6.0.3.js"></script>
+	<script type="text/javascript" src="/sites/EA/routing/SiteAssets/Scripts_and_StyleSheets/Libraries/commonUtilities-v1.1.1.js"></script>
+	<script type="text/javascript" src="/sites/EA/routing/SiteAssets/Scripts_and_StyleSheets/Libraries/applicationAssist-v1.8.9.js"></script>
+	<script type="text/javascript" src="<%= htmlWebpackPlugin.files.js%>"></script>
+	<SharePoint:ScriptBlock runat="server">
+	var navBarHelpOverrideKey = "WSSEndUser";
+	</SharePoint:ScriptBlock>
+<SharePoint:StyleBlock runat="server">
+body #s4-leftpanel {
+	display:none;
+}
+.ms-webpartPage-root {
+   border-spacing: 5px;
+}
+.s4-ca {
+	margin-left:0px;
+}
+table.ms-core-tableNoSpace.ms-webpartPage-root{
+	table-layout: fixed;
+	min-width: 1500px;
+	max-width: 1600px;
+}
+</SharePoint:StyleBlock>
+</asp:Content>
+<asp:Content ContentPlaceHolderId="PlaceHolderSearchArea" runat="server">
+	<SharePoint:DelegateControl runat="server"
+		ControlId="SmallSearchInputBox"/>
+</asp:Content>
+<asp:Content ContentPlaceHolderId="PlaceHolderPageDescription" runat="server">
+	<SharePoint:ProjectProperty Property="Description" runat="server"/>
+</asp:Content>
+<asp:Content ContentPlaceHolderId="PlaceHolderMain" runat="server">
+<div class="ms-hide">
+	<WebPartPages:WebPartZone runat="server" title="loc:TitleBar" id="TitleBar" AllowLayoutChange="false" AllowPersonalization="false" Style="display:none;">
+		<ZoneTemplate><WebPartPages:TitleBarWebPart runat="server" HeaderTitle="delete" Title="Web Part Page Title Bar" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" ZoneID="TitleBar" PartOrder="2" FrameState="Normal" AllowRemove="False" AllowZoneChange="True" AllowMinimize="False" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_2f60896c_f92b_42cd_87dd_2e0dfff0246c" AllowClose="False" ChromeType="None" ExportMode="All" WebPart="true" Height="" Width="">
+			</WebPartPages:TitleBarWebPart></ZoneTemplate>
+	</WebPartPages:WebPartZone>
+</div>
+ <table class="ms-core-tableNoSpace ms-webpartPage-root" width="100%">
+	 <tbody>
+		 <tr style="vertical-align:top;">
+			 <td colspan="2" style="border-bottom: 2px solid #0072c6">
+				 <div id="topRow">
+					<WebPartPages:WebPartZone id="topRowWPZ" runat="server" title="loc:topRow">
+						<ZoneTemplate></ZoneTemplate>
+					</WebPartPages:WebPartZone>
+				</div>
+			</td>
+		</tr>
+		<tr style="vertical-align:top;">
+			<td style="width:49.95%; border-right: 2px solid #0072c6">
+				<div id="centerRowLeft">
+					<WebPartPages:WebPartZone id="centerRowLeftWPZ" runat="server" title="loc:centerRowLeft">
+						<ZoneTemplate></ZoneTemplate>
+					</WebPartPages:WebPartZone>
+				</div>
+			</td>
+			<td style="width:49.95%;">
+				<div id="centerRowRight">
+					<WebPartPages:WebPartZone id="centerRowRightWPZ" runat="server" title="loc:centerRowRight">
+						<ZoneTemplate></ZoneTemplate>
+					</WebPartPages:WebPartZone>
+				</div>
+			</td>
+		</tr>
+		<tr style="vertical-align:top;">
+			<td colspan="2" style="border-top: 2px solid #0072c6">
+				<div id="bottomRow">
+					<WebPartPages:WebPartZone id="bottomRowWPZ" runat="server" title="loc:bottomRow">
+						<ZoneTemplate></ZoneTemplate>
+					</WebPartPages:WebPartZone>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!-- custom Scripts Here below here -->
+<script type="text/javascript" src=""></script>
+<SharePoint:ScriptBlock runat="server">if(typeof(MSOLayout_MakeInvisibleIfEmpty) == "function") {MSOLayout_MakeInvisibleIfEmpty();}</SharePoint:ScriptBlock>
+ </asp:Content>
