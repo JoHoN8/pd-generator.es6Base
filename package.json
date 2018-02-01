@@ -9,8 +9,8 @@
   "author": "Ted",
   "license": "ISC",
   "dependencies": {
-    "chalk": "latest",
-    "yeoman-generator": "latest",
-    "yosay": "latest"
+    "chalk": "^2.3.0",
+    "yeoman-generator": "^2.0.2",
+    "yosay": "^2.0.1"
   }
 }
