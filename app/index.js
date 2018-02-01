@@ -1,6 +1,6 @@
 //<%= ngapp %> to add text in file
 'use strict';
-var generator = require('yeoman-generator'),
+var Generator = require('yeoman-generator'),
     chalk = require('chalk'),
     yosay = require('yosay'),
     includes = function (ary, lib) {
@@ -9,18 +9,18 @@ var generator = require('yeoman-generator'),
         return val > -1;
     };
 
-module.exports = generator.extend({
-    constructor: function(){
-        generator.apply(this, arguments);
+module.exports = class extends Generator {
+    constructor(args, opts) {
+        super(args, opts);
         
         this.includes = includes;
         // this.argument('appname', { type: String, required: true });
         // this.appname = _.kebabCase(this.appname);
         
-    },  
-    initializing: function(){
-    },
-    prompting: function(){
+    };  
+    initializing() {
+    };
+    prompting() {
         var self = this;
 
         this.log(yosay(chalk.yellow('Create an ES6 project')));
@@ -95,102 +95,100 @@ module.exports = generator.extend({
             //done(); 
         });
             
-    },
-    configuring: function(){
-    },
-    writing: {
-        packageJSON: function(){
-            var packageFile = {
-                name: this.projectName,
-                version: "1.0.0",
-                description: this.desc,
-                main: "app.js",
-                scripts: {
-                    "devBuild": "webpack --config ./webpackConfigs/webpack.config.dev.js",
-                    "prodBuild": "webpack --config ./webpackConfigs/webpack.config.prod.js"
-                },
-                author: this.author,
-                license: "ISC",
-                dependencies: {},
-                devDependencies: {}
-            };
+    };
+    configuring() {
+    };
+    packageJSON() {
+        var packageFile = {
+            name: this.projectName,
+            version: "1.0.0",
+            description: this.desc,
+            main: "app.js",
+            scripts: {
+                "devBuild": "webpack --config ./webpackConfigs/webpack.config.dev.js",
+                "prodBuild": "webpack --config ./webpackConfigs/webpack.config.prod.js"
+            },
+            author: this.author,
+            license: "ISC",
+            dependencies: {},
+            devDependencies: {}
+        };
 
-            //dependencies
-            if(this.includeAxios) {packageFile.dependencies["axios"] = "latest";}
-            if(this.includeJquery) {packageFile.dependencies["jquery"] = "2.2.4";}
-            if(this.includeLodash) {packageFile.dependencies["lodash"] = "latest";}
-            if(this.includeMoment) {packageFile.dependencies["moment"] = "latest";}
-            if(this.includesputil) {packageFile.dependencies["pd-sputil"] = "latest";}
-            if(this.includespserverajax) {packageFile.dependencies["pd-spserverajax"] = "latest";}
-            if(this.includespserverjsom) {packageFile.dependencies["pd-spserverjsom"] = "latest";}
-            if(this.includeapputil) {packageFile.dependencies["pd-apputil"] = "latest";}
-            packageFile.dependencies["babel-polyfill"] = "latest";
-            
-            //devDependencies
-            packageFile.devDependencies["webpack"] = "latest";
-            packageFile.devDependencies["clean-webpack-plugin"] = "latest";
-            packageFile.devDependencies["html-webpack-plugin"] = "latest";
-            packageFile.devDependencies["css-loader"] = "latest";
-            packageFile.devDependencies["sass-loader"] = "latest";
-            packageFile.devDependencies["file-loader"] = "latest";
-            packageFile.devDependencies["style-loader"] = "latest";
-            packageFile.devDependencies["extract-text-webpack-plugin"] = "latest";
-            packageFile.devDependencies["babel-core"] = "latest";
-            packageFile.devDependencies["babel-loader"] = "latest";
-            packageFile.devDependencies["babel-preset-env"] = "latest";
-            packageFile.devDependencies["babel-preset-stage-0"] = "latest";
-            packageFile.devDependencies["eslint"] = "latest";
-            packageFile.devDependencies["npm-run-all"] = "latest";
+        //dependencies
+        if(this.includeAxios) {packageFile.dependencies["axios"] = "latest";}
+        if(this.includeJquery) {packageFile.dependencies["jquery"] = "2.2.4";}
+        if(this.includeLodash) {packageFile.dependencies["lodash"] = "latest";}
+        if(this.includeMoment) {packageFile.dependencies["moment"] = "latest";}
+        if(this.includesputil) {packageFile.dependencies["pd-sputil"] = "latest";}
+        if(this.includespserverajax) {packageFile.dependencies["pd-spserverajax"] = "latest";}
+        if(this.includespserverjsom) {packageFile.dependencies["pd-spserverjsom"] = "latest";}
+        if(this.includeapputil) {packageFile.dependencies["pd-apputil"] = "latest";}
+        packageFile.dependencies["babel-polyfill"] = "latest";
+        
+        //devDependencies
+        packageFile.devDependencies["webpack"] = "latest";
+        packageFile.devDependencies["clean-webpack-plugin"] = "latest";
+        packageFile.devDependencies["html-webpack-plugin"] = "latest";
+        packageFile.devDependencies["css-loader"] = "latest";
+        packageFile.devDependencies["sass-loader"] = "latest";
+        packageFile.devDependencies["file-loader"] = "latest";
+        packageFile.devDependencies["style-loader"] = "latest";
+        packageFile.devDependencies["extract-text-webpack-plugin"] = "latest";
+        packageFile.devDependencies["babel-core"] = "latest";
+        packageFile.devDependencies["babel-loader"] = "latest";
+        packageFile.devDependencies["babel-preset-env"] = "latest";
+        packageFile.devDependencies["babel-preset-stage-0"] = "latest";
+        packageFile.devDependencies["eslint"] = "latest";
+        packageFile.devDependencies["npm-run-all"] = "latest";
 
-            this.fs.writeJSON(
-                this.destinationPath('package.json'),
-                packageFile
-            );
-        },
-        appStaticFiles: function(){
-            // this.copy('_favicon.ico', 'src/favicon.ico');
-            this.fs.copy(
-                this.templatePath('gitignore'),
-                this.destinationPath('.gitignore')
-            );
-            this.fs.copy(
-                this.templatePath('.eslintrc.json'),
-                this.destinationPath('.eslintrc.json')
-            );
-            this.fs.copy(
-                this.templatePath('webpackConfigs/**'),
-                this.destinationPath('webpackConfigs/')
-            );
-        },
-        styleSheets: function() {
-            this.fs.copy(
-                this.templatePath('app/_main.css'),
-                this.destinationPath('src/styleSheets/main.css')
-            );
-        },
-        scripts: function(){
-            this.fs.copyTpl(
-                this.templatePath('app/_app.js'),
-                this.destinationPath('src/scripts/app.js'),
-                {
-                    projectName: this.projectName
-                }
-            );
-        },
-        html: function(){
-            this.fs.copy(
-                this.templatePath('_index.html'),
-                this.destinationPath('src/index.html')
-            );
-        }
-    },
-    conflicts: function(){
-    },
-    install: function(){
+        this.fs.writeJSON(
+            this.destinationPath('package.json'),
+            packageFile
+        );
+    };
+    appStaticFiles() {
+        // this.copy('_favicon.ico', 'src/favicon.ico');
+        this.fs.copy(
+            this.templatePath('gitignore'),
+            this.destinationPath('.gitignore')
+        );
+        this.fs.copy(
+            this.templatePath('.eslintrc.json'),
+            this.destinationPath('.eslintrc.json')
+        );
+        this.fs.copy(
+            this.templatePath('webpackConfigs/**'),
+            this.destinationPath('webpackConfigs/')
+        );
+    };
+    styleSheets() {
+        this.fs.copy(
+            this.templatePath('app/_main.css'),
+            this.destinationPath('src/styleSheets/main.css')
+        );
+    };
+    scripts() {
+        this.fs.copyTpl(
+            this.templatePath('app/_app.js'),
+            this.destinationPath('src/scripts/app.js'),
+            {
+                projectName: this.projectName
+            }
+        );
+    };
+    html() {
+        this.fs.copy(
+            this.templatePath('_index.html'),
+            this.destinationPath('src/index.html')
+        );
+    };
+    conflicts() {
+    };
+    install() {
         //this.bowerInstall();
         this.npmInstall();
-    },
-    end: function(){
+    };
+    end() {
         this.log(chalk.yellow.bold('Installation successful!'));
-    }
-});
+    };
+};
